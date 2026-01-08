@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://72.62.124.251:5000/api'
 
 const getAuthHeaders = () => {
   const user = JSON.parse(localStorage.getItem('user') || '{}')

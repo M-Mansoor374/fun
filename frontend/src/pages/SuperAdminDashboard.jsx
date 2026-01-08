@@ -551,7 +551,7 @@ const SuperAdminDashboard = () => {
             <div className="tab-content">
               <div className="tool-container">
                 <iframe
-                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/proxy?url=https://ahrefs.com`}
+                  src={`${import.meta.env.VITE_API_URL || 'http://72.62.124.251:5000/api'}/proxy?url=https://ahrefs.com`}
                   className="tool-iframe"
                   sandbox="allow-scripts allow-same-origin allow-forms"
                 />
