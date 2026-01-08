@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
 import { userService } from '../services/userService'
 import { settingsService } from '../services/settingsService'
+import { cookieService } from '../services/cookieService'
 import logo from '../assets/logo.ahrf.jpeg'
 
 const UserDashboard = () => {
@@ -11,6 +12,7 @@ const UserDashboard = () => {
   const [usage, setUsage] = useState({ keywordUsed: 0, keywordLimit: 0 })
   const [branding, setBranding] = useState({ footerText: '' })
   const keywordRemaining = usage.keywordLimit - usage.keywordUsed
+  const iframeRef = useRef(null)
 
   useEffect(() => {
     loadUsage()
@@ -39,6 +41,22 @@ const UserDashboard = () => {
       }
     } catch (error) {
       // Silent fail - use default text
+    }
+  }
+
+  const injectCookie = async () => {
+    if (iframeRef.current && user?.cookieId) {
+      try {
+        const cookieResponse = await cookieService.getMyCookie()
+        if (cookieResponse.success && cookieResponse.data.cookie) {
+          const cookieData = JSON.parse(cookieResponse.data.cookie.data)
+          Object.entries(cookieData).forEach(([key, value]) => {
+            document.cookie = `${key}=${value}; domain=${new URL(iframeRef.current.src).hostname}; path=/`
+          })
+        }
+      } catch (error) {
+        console.error('Failed to inject cookie:', error)
+      }
     }
   }
 

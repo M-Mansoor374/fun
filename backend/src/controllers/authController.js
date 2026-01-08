@@ -39,7 +39,7 @@ export const register = async (req, res, next) => {
       name: name.trim(),
       email: email.toLowerCase().trim(),
       password,
-      role: role || 'USER'
+      role: 'USER'
     })
 
     const token = generateToken(user._id.toString(), user.role)

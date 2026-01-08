@@ -25,6 +25,7 @@ const SuperAdminDashboard = () => {
   const [cookieData, setCookieData] = useState('')
   const [showCookieEditor, setShowCookieEditor] = useState(false)
   const [cookieError, setCookieError] = useState('')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -231,33 +232,37 @@ const SuperAdminDashboard = () => {
 
   return (
     <div className="super-admin-layout">
-      <div className="sidebar">
+      <div className={`sidebar ${mobileMenuOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
           <img src={logo} alt="Ahrefs Logo" className="sidebar-logo" />
           <h2>Super Admin</h2>
         </div>
         <nav className="sidebar-nav">
-          <button className={activeTab === 'users' ? 'active' : ''} onClick={() => setActiveTab('users')}>
+          <button className={activeTab === 'users' ? 'active' : ''} onClick={() => { setActiveTab('users'); setMobileMenuOpen(false); }}>
             Users & Resellers
           </button>
-          <button className={activeTab === 'cookies' ? 'active' : ''} onClick={() => setActiveTab('cookies')}>
+          <button className={activeTab === 'cookies' ? 'active' : ''} onClick={() => { setActiveTab('cookies'); setMobileMenuOpen(false); }}>
             Cookie Management
           </button>
-          <button className={activeTab === 'branding' ? 'active' : ''} onClick={() => setActiveTab('branding')}>
+          <button className={activeTab === 'branding' ? 'active' : ''} onClick={() => { setActiveTab('branding'); setMobileMenuOpen(false); }}>
             Branding
           </button>
-          <button className={activeTab === 'settings' ? 'active' : ''} onClick={() => setActiveTab('settings')}>
+          <button className={activeTab === 'settings' ? 'active' : ''} onClick={() => { setActiveTab('settings'); setMobileMenuOpen(false); }}>
             Settings
           </button>
-          <button className={activeTab === 'tool' ? 'active' : ''} onClick={() => setActiveTab('tool')}>
+          <button className={activeTab === 'tool' ? 'active' : ''} onClick={() => { setActiveTab('tool'); setMobileMenuOpen(false); }}>
             Ahrefs Tool
           </button>
         </nav>
       </div>
+      {mobileMenuOpen && <div className="sidebar-overlay" onClick={() => setMobileMenuOpen(false)}></div>}
 
       <div className="main-content">
         <header className="main-header">
-          <div>
+          <div className="header-left">
+            <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              ☰
+            </button>
             <h1>{activeTab === 'users' ? 'Users & Resellers' : activeTab === 'cookies' ? 'Cookie Management' : activeTab === 'branding' ? 'Branding' : activeTab === 'settings' ? 'Settings' : 'Ahrefs Tool'}</h1>
           </div>
           <div className="header-actions">

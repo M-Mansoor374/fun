@@ -48,21 +48,18 @@ const RoleSelect = ({ value, onChange, error }) => (
 )
 
 const AuthPage = () => {
-  const { login, register } = useAuth()
+  const { login } = useAuth()
   const { showToast } = useToast()
   const navigate = useNavigate()
-  const [isLogin, setIsLogin] = useState(true)
   const [loginData, setLoginData] = useState({ email: '', password: '', role: '' })
-  const [registerData, setRegisterData] = useState({ name: '', email: '', password: '', role: '' })
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
 
-  const validate = (data, isLoginForm) => {
+  const validate = (data) => {
     const newErrors = {}
     if (!data.email) newErrors.email = true
     if (!data.password) newErrors.password = true
     if (!data.role) newErrors.role = true
-    if (!isLoginForm && !data.name) newErrors.name = true
     return newErrors
   }
 
@@ -74,8 +71,7 @@ const AuthPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const data = isLogin ? loginData : registerData
-    const newErrors = validate(data, isLogin)
+    const newErrors = validate(loginData)
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
@@ -85,19 +81,14 @@ const AuthPage = () => {
     setErrors({})
 
     try {
-      let result
-      if (isLogin) {
-        result = await login(data)
-      } else {
-        result = await register(data)
-      }
+      const result = await login(loginData)
 
       if (result.success) {
-        showToast(isLogin ? 'Login successful' : 'Registration successful', 'success')
+        showToast('Login successful', 'success')
         const currentUser = JSON.parse(localStorage.getItem('user') || '{}')
         navigate(getRoleRoute(currentUser.role))
       } else {
-        showToast(result.message || 'Failed', 'error')
+        showToast(result.message || 'Login failed', 'error')
       }
     } catch (error) {
       showToast(error.message || 'An error occurred', 'error')
@@ -106,14 +97,9 @@ const AuthPage = () => {
     }
   }
 
-  const flip = () => {
-    setIsLogin(!isLogin)
-    setErrors({})
-  }
-
   return (
     <div className="auth-container">
-      <div className={`auth-card ${isLogin ? '' : 'flipped'}`}>
+      <div className="auth-card">
         <div className="card-inner">
           <div className="card-front">
             <form onSubmit={handleSubmit} className="auth-form">
@@ -137,43 +123,6 @@ const AuthPage = () => {
                 error={errors.role}
               />
               <button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
-              <button type="button" onClick={flip} className="switch-btn">
-                Switch to Register
-              </button>
-            </form>
-          </div>
-          <div className="card-back">
-            <form onSubmit={handleSubmit} className="auth-form">
-              <h2>Register</h2>
-              <input
-                type="text"
-                placeholder="Name"
-                value={registerData.name}
-                onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
-                className={errors.name ? 'error' : ''}
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={registerData.email}
-                onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-                className={errors.email ? 'error' : ''}
-              />
-              <PasswordInput
-                value={registerData.password}
-                onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-                placeholder="Password"
-                error={errors.password}
-              />
-              <RoleSelect
-                value={registerData.role}
-                onChange={(e) => setRegisterData({ ...registerData, role: e.target.value })}
-                error={errors.role}
-              />
-              <button type="submit" disabled={loading}>{loading ? 'Registering...' : 'Register'}</button>
-              <button type="button" onClick={flip} className="switch-btn">
-                Switch to Login
-              </button>
             </form>
           </div>
         </div>

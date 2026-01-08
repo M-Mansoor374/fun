@@ -5,6 +5,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
   padding: 20px;
+  overflow-x: hidden;
 }
 
 .auth-card {
@@ -65,6 +66,8 @@
   font-size: 15px;
   transition: all 0.3s;
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .auth-form input:focus,
@@ -80,6 +83,8 @@
 
 .input-wrapper {
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .eye-toggle {
@@ -390,6 +395,19 @@
   left: 0;
   top: 0;
   z-index: 100;
+}
+
+.mobile-menu-btn {
+  display: none;
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
 }
 
 .sidebar-header {
@@ -827,32 +845,349 @@
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    width: 200px;
+  .auth-container {
+    padding: 15px;
   }
 
-  .main-content {
-    margin-left: 200px;
-  }
-
-  .content-area {
-    padding: 20px;
-  }
-}
-
-@media (max-width: 480px) {
   .auth-card {
+    max-width: 100%;
     height: auto;
-    min-height: 500px;
+    min-height: 480px;
   }
 
   .card-front,
   .card-back {
     padding: 30px 25px;
+    height: auto;
+    min-height: 480px;
+  }
+
+  .auth-form {
+    gap: 16px;
   }
 
   .auth-form h2 {
     font-size: 24px;
+  }
+
+  .auth-form input,
+  .auth-form select {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .auth-form button[type="submit"] {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .switch-btn {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .super-admin-layout {
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .sidebar {
+    width: 280px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 12px;
+    color: #1a1f36;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .main-header {
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .main-header h1 {
+    font-size: 20px;
+  }
+
+  .content-area {
+    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  .tab-content {
+    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .section-header h2 {
+    font-size: 18px;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -20px;
+    padding: 0 20px;
+  }
+
+  .data-table {
+    min-width: 800px;
+    font-size: 13px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 10px 8px;
+    white-space: nowrap;
+  }
+
+  .user-dashboard {
+    overflow-x: hidden;
+  }
+
+  .user-header {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .header-logo {
+    gap: 8px;
+  }
+
+  .logo-img {
+    height: 35px;
+  }
+
+  .user-header h1 {
+    font-size: 18px;
+  }
+
+  .user-header > div {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .user-header span {
+    font-size: 12px;
+  }
+
+  .logout-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .user-stats {
+    padding: 15px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    padding: 10px 15px;
+    min-width: 80px;
+    flex: 1;
+    max-width: 120px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+
+  .user-iframe {
+    margin: 10px;
+    min-height: 300px;
+    border-radius: 10px;
+  }
+
+  .tool-iframe {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tool-placeholder h2 {
+    font-size: 20px;
+  }
+
+  .tool-placeholder p {
+    font-size: 13px;
+  }
+
+  .user-footer {
+    padding: 12px 15px;
+  }
+
+  .user-footer p {
+    font-size: 11px;
+  }
+
+  .modal {
+    width: 95%;
+    padding: 20px;
+    max-height: 85vh;
+  }
+
+  .cookie-editor {
+    padding: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .tool-container {
+    height: calc(100vh - 150px);
+  }
+
+  .user-dashboard {
+    overflow-x: hidden;
+  }
+
+  .user-header {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-logo {
+    gap: 10px;
+  }
+
+  .logo-img {
+    height: 38px;
+  }
+
+  .user-header h1 {
+    font-size: 20px;
+  }
+
+  .user-header > div {
+    gap: 10px;
+  }
+
+  .user-stats {
+    padding: 18px 25px;
+    gap: 20px;
+  }
+
+  .stat-item {
+    padding: 12px 20px;
+    min-width: 100px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .user-iframe {
+    margin: 15px;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .auth-card {
+    height: auto;
+    min-height: auto;
+    max-height: calc(100vh - 40px);
+  }
+
+  .card-front,
+  .card-back {
+    padding: 25px 20px;
+    height: auto;
+    min-height: auto;
+    border-radius: 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 40px);
+  }
+
+  .auth-form {
+    gap: 14px;
+    min-height: auto;
+  }
+
+  .auth-form h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .auth-form input,
+  .auth-form select {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  .auth-form button[type="submit"] {
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 8px;
+  }
+
+  .switch-btn {
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 8px;
+    margin-top: 4px;
+  }
+
+  .eye-toggle {
+    right: 10px;
+    font-size: 16px;
+    padding: 4px;
   }
 
   .dashboard {
@@ -863,6 +1198,138 @@
     flex-direction: column;
     gap: 15px;
     text-align: center;
+  }
+
+  .mobile-menu-btn {
+    font-size: 20px;
+    padding: 6px;
+  }
+
+  .main-header {
+    padding: 12px 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .main-header h1 {
+    font-size: 18px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .header-actions span {
+    font-size: 12px;
+  }
+
+  .logout-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .content-area {
+    padding: 15px;
+  }
+
+  .tab-content {
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .section-header {
+    margin-bottom: 16px;
+  }
+
+  .section-header h2 {
+    font-size: 16px;
+  }
+
+  .btn-primary {
+    padding: 8px 16px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .data-table {
+    min-width: 700px;
+    font-size: 12px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+
+  .badge {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+
+  .inline-input {
+    width: 80px;
+    padding: 4px 6px;
+    font-size: 11px;
+  }
+
+  .modal {
+    width: 98%;
+    padding: 15px;
+    max-height: 90vh;
+    border-radius: 8px;
+  }
+
+  .modal h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .modal form {
+    gap: 12px;
+  }
+
+  .modal input,
+  .modal select {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+
+  .cookie-editor {
+    padding: 12px;
+  }
+
+  .cookie-editor h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .cookie-textarea {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .tool-container {
+    height: calc(100vh - 120px);
   }
 
   .sidebar {
@@ -905,6 +1372,19 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .toast-container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+  }
+
+  .toast {
+    min-width: auto;
+    max-width: 100%;
+  }
 }
 
 .toast {

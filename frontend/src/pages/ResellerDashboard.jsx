@@ -13,6 +13,7 @@ const ResellerDashboard = () => {
   const [showAddUser, setShowAddUser] = useState(false)
   const [newUser, setNewUser] = useState({ name: '', email: '', startDate: '', expiryDate: '', keywordLimit: '', status: 'active' })
   const [loading, setLoading] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     if (activeTab === 'users') {
@@ -75,24 +76,28 @@ const ResellerDashboard = () => {
 
   return (
     <div className="super-admin-layout">
-      <div className="sidebar">
+      <div className={`sidebar ${mobileMenuOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
           <img src={logo} alt="Ahrefs Logo" className="sidebar-logo" />
           <h2>Reseller Admin</h2>
         </div>
         <nav className="sidebar-nav">
-          <button className={activeTab === 'users' ? 'active' : ''} onClick={() => setActiveTab('users')}>
+          <button className={activeTab === 'users' ? 'active' : ''} onClick={() => { setActiveTab('users'); setMobileMenuOpen(false); }}>
             Users
           </button>
-          <button className={activeTab === 'tool' ? 'active' : ''} onClick={() => setActiveTab('tool')}>
+          <button className={activeTab === 'tool' ? 'active' : ''} onClick={() => { setActiveTab('tool'); setMobileMenuOpen(false); }}>
             Ahrefs Tool
           </button>
         </nav>
       </div>
+      {mobileMenuOpen && <div className="sidebar-overlay" onClick={() => setMobileMenuOpen(false)}></div>}
 
       <div className="main-content">
         <header className="main-header">
-          <div>
+          <div className="header-left">
+            <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              ☰
+            </button>
             <h1>{activeTab === 'users' ? 'Users' : 'Ahrefs Tool'}</h1>
           </div>
           <div className="header-actions">
