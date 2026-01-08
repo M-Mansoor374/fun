@@ -17,7 +17,25 @@ JWT_SECRET=your-secret-key
 JWT_EXPIRE=7d
 ```
 
-3. Start server:
+3. Create Super Admin (First time setup):
+```bash
+npm run seed:admin
+```
+
+This will create a Super Admin with default credentials:
+- **Email:** `admin@ahrf-saas.com`
+- **Password:** `Ahrf@2024!Secure`
+
+**For Production:** Set custom credentials in `.env`:
+```env
+ADMIN_EMAIL=your-admin@email.com
+ADMIN_PASSWORD=YourSecurePassword123!
+ADMIN_NAME=Your Admin Name
+```
+
+⚠️ **IMPORTANT:** Change the password immediately after first login!
+
+4. Start server:
 ```bash
 npm run dev
 ```
